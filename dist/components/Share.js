@@ -14,14 +14,6 @@ var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _lodash = require('lodash.isequal');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _lodash3 = require('lodash.clonedeep');
-
-var _lodash4 = _interopRequireDefault(_lodash3);
-
 var _AbstractWidget = require('./AbstractWidget');
 
 var _AbstractWidget2 = _interopRequireDefault(_AbstractWidget);
@@ -33,6 +25,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var isEqual = function isEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+var cloneDeep = function cloneDeep(a) {
+  return JSON.parse(JSON.stringify(a));
+};
 
 var Share = function (_React$Component) {
   _inherits(Share, _React$Component);
@@ -56,7 +55,7 @@ var Share = function (_React$Component) {
 
       // Options must be cloned since Twitter Widgets modifies it directly
 
-      tw.widgets.createShareButton(url, element, (0, _lodash4.default)(options)).then(function () {
+      tw.widgets.createShareButton(url, element, cloneDeep(options)).then(function () {
         // Widget is loaded
         done();
         onLoad();
@@ -70,7 +69,7 @@ var Share = function (_React$Component) {
       var _this2 = this;
 
       var changed = function changed(name) {
-        return !(0, _lodash2.default)(_this2.props[name], nextProps[name]);
+        return !isEqual(_this2.props[name], nextProps[name]);
       };
       return changed('url') || changed('options');
     }

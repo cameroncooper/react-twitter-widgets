@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import isEqual from 'lodash.isequal'
-import cloneDeep from 'lodash.clonedeep'
 import AbstractWidget from './AbstractWidget'
+
+const isEqual = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+const cloneDeep = (a) => JSON.parse(JSON.stringify(a));
 
 export default class Share extends React.Component {
   static propTypes = {
